@@ -1736,7 +1736,6 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc)
 	struct address_space *mapping = page->mapping;
 	pgoff_t pgoff = page_to_pgoff(page);
 	struct vm_area_struct *vma;
-	unsigned long address;
 	int ret = SWAP_AGAIN;
 
 	/*
@@ -1749,16 +1748,7 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc)
 
 	if (!mapping)
 		return ret;
-	mutex_lock(&mapping->i_mmap_mutex);
-	if (rwc->target_vma) {
-               /* We don't handle non-linear vma on ramfs */
-               if (unlikely(!list_empty(&mapping->i_mmap_nonlinear)))
-                        goto done;
-               address = vma_address(page, rwc->target_vma);
-               ret = rwc->rmap_one(page, rwc->target_vma, address, rwc->arg);
-               goto done;
-	}
-
+	i_mmap_lock_write(mapping);
 	vma_interval_tree_foreach(vma, &mapping->i_mmap, pgoff, pgoff) {
 		unsigned long address = vma_address(page, vma);
 
@@ -1781,7 +1771,7 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc)
 	ret = rwc->file_nonlinear(page, mapping, rwc->arg);
 
 done:
-	mutex_unlock(&mapping->i_mmap_mutex);
+	i_mmap_unlock_write(mapping);
 	return ret;
 }
 
