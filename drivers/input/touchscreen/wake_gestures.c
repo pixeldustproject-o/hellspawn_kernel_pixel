@@ -42,8 +42,8 @@
 #define WG_PWRKEY_DUR           180
 
 /* marlin */
-#define SWEEP_Y_MAX		2560
-#define SWEEP_X_MAX		1440
+#define SWEEP_Y_MAX             2560
+#define SWEEP_X_MAX             1440
 #define SWEEP_EDGE		130
 #define SWEEP_Y_LIMIT		SWEEP_Y_MAX-SWEEP_EDGE
 #define SWEEP_X_LIMIT		SWEEP_X_MAX-SWEEP_EDGE
@@ -51,8 +51,8 @@
 #define SWEEP_X_B2		960
 #define SWEEP_Y_START		1066
 #define SWEEP_X_START		720
-#define SWEEP_X_FINAL		360
-#define SWEEP_Y_NEXT		240
+#define SWEEP_X_FINAL           360
+#define SWEEP_Y_NEXT            180
 
 /* sailfish */
 #define SWEEP_Y_MAX_SAILFISH	1920
@@ -60,24 +60,24 @@
 #define SWEEP_EDGE_SAILFISH	90
 #define SWEEP_Y_LIMIT_SAILFISH	SWEEP_Y_MAX_SAILFISH-SWEEP_EDGE
 #define SWEEP_X_LIMIT_SAILFISH	SWEEP_X_MAX_SAILFISH-SWEEP_EDGE
-#define SWEEP_X_B1_SAILFISH	340
-#define SWEEP_X_B2_SAILFISH	620
+#define SWEEP_X_B1_SAILFISH	399
+#define SWEEP_X_B2_SAILFISH	720
 #define SWEEP_Y_START_SAILFISH	800
 #define SWEEP_X_START_SAILFISH	540
 #define SWEEP_X_FINAL_SAILFISH	270
 #define SWEEP_Y_NEXT_SAILFISH	135
 
 /* Wake Gestures */
-#define SWEEP_TIMEOUT		300
-#define TRIGGER_TIMEOUT		500
+#define SWEEP_TIMEOUT		90
+#define TRIGGER_TIMEOUT		150
 #define DT2W_FEATHER		150
-#define DT2W_TIME		500
+#define DT2W_TIME 		150
 #define WAKE_GESTURE		0x0b
 #define SWEEP_RIGHT		0x01
 #define SWEEP_LEFT		0x02
 #define SWEEP_UP		0x04
 #define SWEEP_DOWN		0x08
-#define VIB_STRENGTH		20
+#define VIB_STRENGTH 		20
 #define WAKE_GESTURES_ENABLED	1
 
 #define LOGTAG			"WG"
@@ -236,9 +236,9 @@ static void detect_doubletap2wake(int x, int y, bool st)
                 x, y, tap_time_pre);
 #endif
 	if (x < sweep_edge || x > sweep_x_limit)
-		return;
+       		return;
 	if (y < sweep_edge || y > sweep_y_limit)
-		return;
+       		return;
 
 	if ((single_touch) && (dt2w_switch) && (exec_count) && (touch_cnt)) {
 		touch_cnt = false;
