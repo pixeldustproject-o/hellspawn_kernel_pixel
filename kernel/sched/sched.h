@@ -1183,8 +1183,11 @@ static const u32 prio_to_wmult[40] = {
  /*  15 */ 119304647, 148102320, 186737708, 238609294, 286331153,
 };
 
+#define DEQUEUE_IDLE		0x80 /* The last dequeue before IDLE */
+
 #define ENQUEUE_WAKEUP		1
-#define ENQUEUE_HEAD		2
+#define ENQUEUE_RESTORE		2
+
 #ifdef CONFIG_SMP
 #define ENQUEUE_WAKING		4	/* sched_class::task_waking was called */
 #else
