@@ -403,7 +403,7 @@ KBUILD_CFLAGS   := -Werror -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -std=gnu89
+		   -std=gnu89 -w
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
@@ -609,6 +609,14 @@ endif # $(dot-config)
 all: vmlinux
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
+
+ifneq ($(COMPILER),clang)
+LDFLAGS		+= --strip-debug
+KBUILD_CFLAGS	+= $(call cc-option,-mlow-precision-recip-sqrt,) \
+		   $(call cc-option,-mpc-relative-literal-loads,)
+KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
+KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
+endif
 
 KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
 KBUILD_CFLAGS	+= $(call cc-disable-warning,frame-address,)
