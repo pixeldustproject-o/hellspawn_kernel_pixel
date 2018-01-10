@@ -15,6 +15,16 @@ ccflags-y := -shared -fno-common -fno-builtin
 ccflags-y += -nostdlib -Wl,-soname=linux-vdso.so.1 \
 		$(call cc-ldoption, -Wl$(comma)--hash-style=sysv)
 
+<<<<<<< HEAD
+=======
+# Force -O2 to avoid libgcc dependencies
+CFLAGS_REMOVE_vgettimeofday.o = -pg -Os
+CFLAGS_vgettimeofday.o = -O2 -fPIC
+ifneq ($(cc-name),clang)
+CFLAGS_vgettimeofday.o += -mcmodel=tiny
+endif
+
+>>>>>>> 5f54b2d1e392... arm64: vdso32: fix CC=clang build
 # Disable gcov profiling for VDSO code
 GCOV_PROFILE := n
 
