@@ -11,10 +11,9 @@
  * published by the Free Software Foundation.
  */
 
-#include <linux/usb/gadget.h>
 #include "u_f.h"
 
-struct usb_request *alloc_ep_req(struct usb_ep *ep, int len, int default_len)
+struct usb_request *alloc_ep_req(struct usb_ep *ep, size_t len, int default_len)
 {
 	struct usb_request      *req;
 
