@@ -947,9 +947,6 @@ static enum hrtimer_restart dl_task_timer(struct hrtimer *timer)
 	if (!dl_se->dl_throttled)
 		goto unlock;
 
-	sched_clock_tick();
-	update_rq_clock(rq);
-
 	/*
 	 * If the throttle happened during sched-out; like:
 	 *
@@ -1216,6 +1213,9 @@ static enum hrtimer_restart inactive_task_timer(struct hrtimer *timer)
 	struct rq *rq;
 
 	rq = task_rq_lock(p, &rf);
+
+	sched_clock_tick();
+	update_rq_clock(rq);
 
 	if (!dl_task(p) || p->state == TASK_DEAD) {
 		struct dl_bw *dl_b = dl_bw_of(task_cpu(p));
