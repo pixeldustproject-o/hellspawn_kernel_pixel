@@ -103,3 +103,5 @@ x509.genkey
 
 # Kconfig presets
 all.config
+build.sh
+clean.sh
